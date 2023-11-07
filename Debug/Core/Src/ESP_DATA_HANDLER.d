@@ -1,5 +1,5 @@
-Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_fsmc.o: \
- ../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_fsmc.c \
+Core/Src/ESP_DATA_HANDLER.o: ../Core/Src/ESP_DATA_HANDLER.c \
+ ../Core/Inc/ESP_DATA_HANDLER.h ../Core/Inc/UartRingbuffer.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h \
  ../Core/Inc/stm32f1xx_hal_conf.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h \
@@ -25,6 +25,8 @@ Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_fsmc.o: \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_fsmc.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
+../Core/Inc/ESP_DATA_HANDLER.h:
+../Core/Inc/UartRingbuffer.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
 ../Core/Inc/stm32f1xx_hal_conf.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h:
