@@ -1,5 +1,3 @@
-"./Core/Src/ESP_DATA_HANDLER.o"
-"./Core/Src/UartRingbuffer.o"
 "./Core/Src/lcd.o"
 "./Core/Src/main.o"
 "./Core/Src/stm32f1xx_hal_msp.o"

@@ -22,7 +22,6 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "lcd.h"
-#include "ESP_DATA_HANDLER.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -93,7 +92,6 @@ int main(void)
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
   LCD_INIT();
-  ESP_Init("Coin master", "jonathan102", "192.168.0.102");
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -101,7 +99,6 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	  Server_Start();
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
