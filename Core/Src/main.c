@@ -66,7 +66,6 @@ SRAM_HandleTypeDef hsram1;
 
 /* USER CODE BEGIN PV */
 
-//uint8_t rx_data[11];
 char receiveCode[10];
 uint32_t send_Code = 0;
 uint32_t receive_Code = 0;
@@ -95,16 +94,27 @@ uint8_t open = 0;
 uint8_t user = 0;
 uint8_t user_change = 0;
 
+//uncomment this block to flash code for device
 #define DEVICE 1
 #define REMOTE 0
+
+//uncomment this block to flash code for remote
+//#define DEVICE 0
+//#define REMOTE 1
+
+//display mode
 #define LIGHT 0
 #define DARK 1
+
+//buttons
 #define BUTTON1 0x01
 #define BUTTON2 0x02
 #define BUTTON3 0x03
 #define BUTTON4 0x04
 #define POWER 0x69
 #define ADDRESS 0x11
+
+//user
 #define NOUSER 0
 #define JONATHAN 1
 #define CHRIS 2
@@ -137,31 +147,8 @@ static void MX_ADC1_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-void DecimalToHex(uint32_t decimal, char Hex[])
-{
-	for(int i = 0; i < 3; i++)
-	{
-		int x = decimal%16;
-		if(x < 10)
-			Hex[2-i] = x+48;
-		else
-			Hex[2-i] = x+55;
-		decimal = decimal/16;
-	}
-	Hex[3] = '\0';
-}
 
-void IntToStr(uint32_t integer, char string[])
-{
-
-	for(int i = 0; i < 4; i++)
-	{
-		string[3-i] = integer%10+48;
-		integer = integer /10;
-	}
-	string[4] = '\0';
-}
-
+// IR sender function
 void IR_send(uint8_t addr, uint8_t data)
 {
 	uint8_t iaddr = ~addr;
@@ -169,8 +156,6 @@ void IR_send(uint8_t addr, uint8_t data)
 	uint8_t idata = ~data;
 	char sendCode[10];
 	send_Code = addr<<24 | iaddr<<16 | data<<8 | idata;
-	itoa(send_Code, sendCode, 16);
-	LCD_DrawString(0,0,sendCode, BLACK, WHITE);
 
 	HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_3);
 	HAL_Delay_us(9000);
@@ -190,10 +175,9 @@ void IR_send(uint8_t addr, uint8_t data)
 	HAL_TIM_PWM_Stop(&htim2,TIM_CHANNEL_3);
 }
 
+//print remote screen function
 void PrintRemote()
 {
-//	LCD_DrawString(75, 0, "Remote mode", BLACK, WHITE);
-
 	LCD_OpenWindow(40, 20, 160, 60);
 	LCD_FillColor(160*60, RED);
 	LCD_DrawString(100, 30, "Power", WHITE, RED);
@@ -215,6 +199,7 @@ void PrintRemote()
 	LCD_DrawString(152, 260, "button4", WHITE, BLACK);
 }
 
+// print light mode device menu function
 void PrintDevice_light(uint8_t user, uint8_t button1, uint8_t button2)
 {
 	LCD_Clear(0,0,240,320,WHITE);
@@ -259,6 +244,7 @@ void PrintDevice_light(uint8_t user, uint8_t button1, uint8_t button2)
 	}
 }
 
+//print dark mode device menu function
 void PrintDevice_dark(uint8_t user, uint8_t button1, uint8_t button2)
 {
 	LCD_Clear(0,0,240,320,BLACK);
@@ -303,12 +289,14 @@ void PrintDevice_dark(uint8_t user, uint8_t button1, uint8_t button2)
 	}
 }
 
+//IR receiver data decryption
 void Find_Data(uint32_t *code)
 {
 	*code = *code & 0x0000ff00;
 	*code = *code >> 8;
 }
 
+//toggle device button one display function
 void Update_Button1()
 {
 	if(button1)
@@ -321,6 +309,7 @@ void Update_Button1()
 	}
 }
 
+//toggle device button two display function
 void Update_Button2()
 {
 	if(button2)
@@ -333,6 +322,7 @@ void Update_Button2()
 	}
 }
 
+//turn on button one function
 void Button1_On()
 {
 	button1 = 1;
@@ -346,6 +336,7 @@ void Button1_On()
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
 }
 
+//turn on button two function
 void Button2_On()
 {
 	button2 = 1;
@@ -359,6 +350,7 @@ void Button2_On()
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_9, GPIO_PIN_SET);
 }
 
+//turn off button one function
 void Button1_Off()
 {
 	button1 = 0;
@@ -372,6 +364,7 @@ void Button1_Off()
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
 }
 
+//turn off button two function
 void Button2_Off()
 {
 	button2 = 0;
@@ -442,8 +435,6 @@ int main(void)
 	  PrintDevice_light(0,0,0);
   else
 	  PrintRemote();
-//  LCD_Clear(0,0,240,320, BLACK);
-//  PrintDevice_light(0,button1,button2);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -454,25 +445,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-//
-	  	if(HAL_ADC_PollForConversion(&hadc1, 1000) == HAL_OK)
-		  {
-			  int ADCValue1 = HAL_ADC_GetValue(&hadc1);
-			  if(ADCValue1 < 3750)
-			  {
-				  if(!open)
-					  PrintDevice_light(user, button1, button2);
-				  open = 1;
-				  light_dark_mode = LIGHT;
-			  }
-			  else
-			  {
-				  if(open)
-					  PrintDevice_dark(user, button1, button2);
-				  open = 0;
-				  light_dark_mode = DARK;
-			  }
-		  }
+	  	//light sensor
 
 	  if(REMOTE)
 	  {
@@ -502,12 +475,30 @@ int main(void)
 
 	  if(DEVICE)
 	  {
+		  if(HAL_ADC_PollForConversion(&hadc1, 1000) == HAL_OK)
+		  {
+			  int ADCValue1 = HAL_ADC_GetValue(&hadc1);
+			  if(ADCValue1 < 3750)
+			  {
+				  if(!open)
+					  PrintDevice_light(user, button1, button2);
+				  open = 1;
+				  light_dark_mode = LIGHT;
+			  }
+			  else
+			  {
+				  if(open)
+					  PrintDevice_dark(user, button1, button2);
+				  open = 0;
+				  light_dark_mode = DARK;
+			  }
+		  }
 		  if(user_change == 1)
 		  {
 			  if(light_dark_mode == LIGHT)
-				  LCD_Clear(60, 20, 150, 20, WHITE);
+				  LCD_Clear(50, 20, 160, 20, WHITE);
 			  else
-				  LCD_Clear(60, 20, 150, 20, BLACK);
+				  LCD_Clear(50, 20, 160, 20, BLACK);
 			  if(user == CHRIS)
 			  {
 				  if(light_dark_mode == LIGHT)
@@ -1094,24 +1085,6 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 	else if(pwm_high_level_time > 0 && pwm_high_level_time < 1000){
 		Data=0;		//收到数据0
 	}
-
-
-//	pwm_high_level_time = HAL_TIM_ReadCapturedValue(&htim3,TIM_CHANNEL_1) + 1;
-//	__HAL_TIM_SET_COUNTER(&htim3,0);
-//	TIM_RESET_CAPTUREPOLARITY(&htim3, TIM_CHANNEL_1);
-//	uint8_t Data=0;ok2=1;
-//	if(pwm_high_level_time >= 16000){
-//		Index=0;ok = 1;
-//	}
-////	else if(pwm_high_level_time >= 12000 && pwm_high_level_time < 16000){
-////		Index=0;ok = 1;
-////	}
-//	else if(pwm_high_level_time >= 1500 && pwm_high_level_time < 3500){
-//		Data=1;		//收到数据1
-//	}
-//	else if(pwm_high_level_time < 1500){
-//		Data=0;		//收到数据0
-//	}
 
 	if(ok == 1 && ok2 == 1){
 		receive_Code <<= 1;

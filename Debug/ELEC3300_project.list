@@ -27,23 +27,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .ARM.attributes 00000029  00000000  00000000  00020138  2**0
                   CONTENTS, READONLY
- 12 .debug_info   00014871  00000000  00000000  00020161  2**0
+ 12 .debug_info   0001479a  00000000  00000000  00020161  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 000030d1  00000000  00000000  000349d2  2**0
+ 13 .debug_abbrev 000030bc  00000000  00000000  000348fb  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_aranges 000014d0  00000000  00000000  00037aa8  2**3
+ 14 .debug_aranges 000014c0  00000000  00000000  000379b8  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_ranges 00001370  00000000  00000000  00038f78  2**3
+ 15 .debug_ranges 00001360  00000000  00000000  00038e78  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  0001d21d  00000000  00000000  0003a2e8  2**0
+ 16 .debug_macro  0001d21d  00000000  00000000  0003a1d8  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   000183a1  00000000  00000000  00057505  2**0
+ 17 .debug_line   000182d8  00000000  00000000  000573f5  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    000a6de9  00000000  00000000  0006f8a6  2**0
+ 18 .debug_str    000a6db7  00000000  00000000  0006f6cd  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000050  00000000  00000000  0011668f  2**0
+ 19 .comment      00000050  00000000  00000000  00116484  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  0000606c  00000000  00000000  001166e0  2**2
+ 20 .debug_frame  00006018  00000000  00000000  001164d4  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -2388,10 +2388,10 @@ void LCD_DrawString ( uint16_t usC, uint16_t usP, const char * pStr, uint16_t te
 	...
 
 080011e4 <PrintDevice_light>:
-	LCD_FillColor(100*100, BLACK);
 	LCD_DrawString(152, 260, "button4", WHITE, BLACK);
 }
 
+// print light mode device menu function
 void PrintDevice_light(uint8_t user, uint8_t button1, uint8_t button2)
 {
  80011e4:	b580      	push	{r7, lr}
@@ -2571,6 +2571,7 @@ void PrintDevice_light(uint8_t user, uint8_t button1, uint8_t button2)
 
 0800133c <PrintDevice_dark>:
 
+//print dark mode device menu function
 void PrintDevice_dark(uint8_t user, uint8_t button1, uint8_t button2)
 {
  800133c:	b580      	push	{r7, lr}
@@ -2749,6 +2750,7 @@ void PrintDevice_dark(uint8_t user, uint8_t button1, uint8_t button2)
 
 08001490 <Find_Data>:
 
+//IR receiver data decryption
 void Find_Data(uint32_t *code)
 {
  8001490:	b480      	push	{r7}
@@ -2776,6 +2778,7 @@ void Find_Data(uint32_t *code)
 
 080014b8 <Update_Button1>:
 
+//toggle device button one display function
 void Update_Button1()
 {
  80014b8:	b580      	push	{r7, lr}
@@ -2805,6 +2808,7 @@ void Update_Button1()
 
 080014d8 <Update_Button2>:
 
+//toggle device button two display function
 void Update_Button2()
 {
  80014d8:	b580      	push	{r7, lr}
@@ -2834,6 +2838,7 @@ void Update_Button2()
 
 080014f8 <Button1_On>:
 
+//turn on button one function
 void Button1_On()
 {
  80014f8:	b580      	push	{r7, lr}
@@ -2901,6 +2906,7 @@ void Button1_On()
 
 08001580 <Button2_On>:
 
+//turn on button two function
 void Button2_On()
 {
  8001580:	b580      	push	{r7, lr}
@@ -2968,6 +2974,7 @@ void Button2_On()
 
 08001608 <Button1_Off>:
 
+//turn off button one function
 void Button1_Off()
 {
  8001608:	b580      	push	{r7, lr}
@@ -3035,6 +3042,7 @@ void Button1_Off()
 
 08001690 <Button2_Off>:
 
+//turn off button two function
 void Button2_Off()
 {
  8001690:	b580      	push	{r7, lr}
@@ -3223,12 +3231,12 @@ int main(void)
  80017dc:	2100      	movs	r1, #0
  80017de:	2000      	movs	r0, #0
  80017e0:	f7ff fd00 	bl	80011e4 <PrintDevice_light>
-    /* USER CODE END WHILE */
+			x=0;y=0;
+	  }
 
-    /* USER CODE BEGIN 3 */
-
-//
-	  	if(HAL_ADC_PollForConversion(&hadc1, 1000) == HAL_OK)
+	  if(DEVICE)
+	  {
+		  if(HAL_ADC_PollForConversion(&hadc1, 1000) == HAL_OK)
  80017e4:	f44f 717a 	mov.w	r1, #1000	; 0x3e8
  80017e8:	4852      	ldr	r0, [pc, #328]	; (8001934 <main+0x21c>)
  80017ea:	f001 ffff 	bl	80037ec <HAL_ADC_PollForConversion>
@@ -3295,11 +3303,8 @@ int main(void)
  8001850:	4b3e      	ldr	r3, [pc, #248]	; (800194c <main+0x234>)
  8001852:	2201      	movs	r2, #1
  8001854:	701a      	strb	r2, [r3, #0]
-			x=0;y=0;
-	  }
-
-	  if(DEVICE)
-	  {
+			  }
+		  }
 		  if(user_change == 1)
  8001856:	4b3e      	ldr	r3, [pc, #248]	; (8001950 <main+0x238>)
  8001858:	781b      	ldrb	r3, [r3, #0]
@@ -3311,23 +3316,23 @@ int main(void)
  8001862:	781b      	ldrb	r3, [r3, #0]
  8001864:	2b00      	cmp	r3, #0
  8001866:	d109      	bne.n	800187c <main+0x164>
-				  LCD_Clear(60, 20, 150, 20, WHITE);
+				  LCD_Clear(50, 20, 160, 20, WHITE);
  8001868:	f64f 73ff 	movw	r3, #65535	; 0xffff
  800186c:	9300      	str	r3, [sp, #0]
  800186e:	2314      	movs	r3, #20
- 8001870:	2296      	movs	r2, #150	; 0x96
+ 8001870:	22a0      	movs	r2, #160	; 0xa0
  8001872:	2114      	movs	r1, #20
- 8001874:	203c      	movs	r0, #60	; 0x3c
+ 8001874:	2032      	movs	r0, #50	; 0x32
  8001876:	f7ff fc0e 	bl	8001096 <LCD_Clear>
  800187a:	e007      	b.n	800188c <main+0x174>
 			  else
-				  LCD_Clear(60, 20, 150, 20, BLACK);
+				  LCD_Clear(50, 20, 160, 20, BLACK);
  800187c:	2300      	movs	r3, #0
  800187e:	9300      	str	r3, [sp, #0]
  8001880:	2314      	movs	r3, #20
- 8001882:	2296      	movs	r2, #150	; 0x96
+ 8001882:	22a0      	movs	r2, #160	; 0xa0
  8001884:	2114      	movs	r1, #20
- 8001886:	203c      	movs	r0, #60	; 0x3c
+ 8001886:	2032      	movs	r0, #50	; 0x32
  8001888:	f7ff fc05 	bl	8001096 <LCD_Clear>
 			  if(user == CHRIS)
  800188c:	4b2c      	ldr	r3, [pc, #176]	; (8001940 <main+0x228>)
@@ -3692,7 +3697,7 @@ int main(void)
  8001b14:	e666      	b.n	80017e4 <main+0xcc>
 			  continue;
  8001b16:	bf00      	nop
-	  	if(HAL_ADC_PollForConversion(&hadc1, 1000) == HAL_OK)
+	  if(REMOTE)
  8001b18:	e664      	b.n	80017e4 <main+0xcc>
  8001b1a:	bf00      	nop
  8001b1c:	080081f4 	.word	0x080081f4
@@ -5039,10 +5044,7 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 		Data=0;		//收到数据0
  80022f2:	2300      	movs	r3, #0
  80022f4:	73fb      	strb	r3, [r7, #15]
-//	}
-//	else if(pwm_high_level_time < 1500){
-//		Data=0;		//收到数据0
-//	}
+	}
 
 	if(ok == 1 && ok2 == 1){
  80022f6:	4b21      	ldr	r3, [pc, #132]	; (800237c <HAL_TIM_IC_CaptureCallback+0x198>)
