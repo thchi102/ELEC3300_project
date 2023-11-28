@@ -1,0 +1,14 @@
+../Core/Src/bsp_xpt2046_lcd.c:79:13:XPT2046_DelayUS	24	static
+../Core/Src/bsp_xpt2046_lcd.c:104:13:XPT2046_WriteCMD	24	static
+../Core/Src/bsp_xpt2046_lcd.c:133:17:XPT2046_ReadCMD	16	static
+../Core/Src/bsp_xpt2046_lcd.c:169:17:XPT2046_ReadAdc	16	static
+../Core/Src/bsp_xpt2046_lcd.c:184:13:XPT2046_ReadAdc_XY	24	static
+../Core/Src/bsp_xpt2046_lcd.c:319:16:XPT2046_ReadAdc_Smooth_XY	80	static
+../Core/Src/bsp_xpt2046_lcd.c:403:16:XPT2046_Calculate_CalibrationFactor	32	static
+../Core/Src/bsp_xpt2046_lcd.c:460:13:ILI9341_DrawCross	32	static
+../Core/Src/bsp_xpt2046_lcd.c:497:6:Calibrate_or_Get_TouchParaWithFlash	24	static
+../Core/Src/bsp_xpt2046_lcd.c:571:9:XPT2046_Get_TouchedPoint	40	static
+../Core/Src/bsp_xpt2046_lcd.c:601:9:XPT2046_TouchDetect	16	static
+../Core/Src/bsp_xpt2046_lcd.c:680:6:XPT2046_TouchDown	24	static
+../Core/Src/bsp_xpt2046_lcd.c:720:6:XPT2046_TouchUp	24	static
+../Core/Src/bsp_xpt2046_lcd.c:742:6:XPT2046_TouchEvenHandler	24	static

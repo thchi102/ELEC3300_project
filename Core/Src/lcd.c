@@ -372,7 +372,7 @@ void LCD_DrawLine ( uint16_t usC1, uint16_t usP1, uint16_t usC2, uint16_t usP2, 
 }   
 
 
-void LCD_DrawChar ( uint16_t usC, uint16_t usP, const char cChar )
+void LCD_DrawChar ( uint16_t usC, uint16_t usP, const char cChar, uint16_t textcolor, uint16_t bgcolor )
 {
 	uint8_t ucTemp, ucRelativePositon, ucPage, ucColumn;
 
@@ -390,10 +390,10 @@ void LCD_DrawChar ( uint16_t usC, uint16_t usP, const char cChar )
 		for ( ucColumn = 0; ucColumn < WIDTH_EN_CHAR; ucColumn ++ )
 		{
 			if ( ucTemp & 0x01 )
-				LCD_Write_Data ( 0x001F );
+				LCD_Write_Data ( textcolor );
 			
 			else
-				LCD_Write_Data (  0xFFFF );								
+				LCD_Write_Data (  bgcolor );
 			
 			ucTemp >>= 1;		
 			
@@ -406,7 +406,7 @@ void LCD_DrawChar ( uint16_t usC, uint16_t usP, const char cChar )
 
 
 
-void LCD_DrawString ( uint16_t usC, uint16_t usP, const char * pStr )
+void LCD_DrawString ( uint16_t usC, uint16_t usP, const char * pStr, uint16_t textcolor, uint16_t bgcolor)
 {
 	while ( * pStr != '\0' )
 	{
@@ -422,7 +422,7 @@ void LCD_DrawString ( uint16_t usC, uint16_t usP, const char * pStr )
 			usP = LCD_DispWindow_Start_PAGE;
 		}
 		
-		LCD_DrawChar ( usC, usP, * pStr );
+		LCD_DrawChar ( usC, usP, * pStr, textcolor, bgcolor );
 		
 		pStr ++;
 		

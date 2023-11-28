@@ -49,6 +49,8 @@ extern "C" {
 
 /* USER CODE END EM */
 
+void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
+
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
 
@@ -57,6 +59,26 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define LCD_Touch_Din_Pin GPIO_PIN_2
+#define LCD_Touch_Din_GPIO_Port GPIOE
+#define LCD_Touch_Dout_Pin GPIO_PIN_3
+#define LCD_Touch_Dout_GPIO_Port GPIOE
+#define LCD_Touch_IRQ_Pin GPIO_PIN_4
+#define LCD_Touch_IRQ_GPIO_Port GPIOE
+#define PN532_SS_Pin GPIO_PIN_0
+#define PN532_SS_GPIO_Port GPIOB
+#define PN532_IRQ_Pin GPIO_PIN_1
+#define PN532_IRQ_GPIO_Port GPIOB
+#define PN532_RST_Pin GPIO_PIN_10
+#define PN532_RST_GPIO_Port GPIOB
+#define LCS_BL_Pin GPIO_PIN_12
+#define LCS_BL_GPIO_Port GPIOD
+#define LCD_Touch_Select_Pin GPIO_PIN_13
+#define LCD_Touch_Select_GPIO_Port GPIOD
+#define LCD_Touch_CLK_Pin GPIO_PIN_0
+#define LCD_Touch_CLK_GPIO_Port GPIOE
+#define LCD_RST_Pin GPIO_PIN_1
+#define LCD_RST_GPIO_Port GPIOE
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

@@ -12,7 +12,7 @@
 ../Core/Src/lcd.c:269:10:LCD_Read_PixelData	16	static
 ../Core/Src/lcd.c:289:10:LCD_GetPointPixel	24	static
 ../Core/Src/lcd.c:303:6:LCD_DrawLine	64	static
-../Core/Src/lcd.c:375:6:LCD_DrawChar	24	static
-../Core/Src/lcd.c:409:6:LCD_DrawString	16	static
+../Core/Src/lcd.c:375:6:LCD_DrawChar	32	static
+../Core/Src/lcd.c:409:6:LCD_DrawString	40	static
 ../Core/Src/lcd.c:437:6:LCD_DrawDot	16	static
 ../Core/Src/lcd.c:461:6:LCD_DrawEllipse	64	static
